@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,20 +29,14 @@ public class MainControllerTest {
 	}
 	
 	@Test
-	public void testHelloWorld() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
-			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.content().string("hello World"));
-	}
-	
-	@Test
 	public void testHelloWorldJson() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.get("/hello/json").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.get("/test")
+			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.title", Matchers.is("Greetings")))
-			.andExpect(jsonPath("$.value", Matchers.is("Hello World")))
-			.andExpect(jsonPath("$.*", Matchers.hasSize(2)));
-
+			.andExpect(jsonPath("$.id", Matchers.is(1)))
+			.andExpect(jsonPath("$.name", Matchers.is("Arif")))
+			.andExpect(jsonPath("$.address", Matchers.is("Delhi")))
+			.andExpect(jsonPath("$.*", Matchers.hasSize(1)));
 	}
 	
 }
